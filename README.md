@@ -140,3 +140,24 @@ You can find the workflow file at: [.github/workflows/docker-image.yml](https://
 ```bash
 docker run -d -p 80:80 your-dockerhub-username/image-name
 ```
+
+# Part 3: Project Overview
+
+## Goal
+Set up automatic builds for our Angular app Docker container whenever we make code changes. This keeps the app updated and ready to use.
+
+## Tools Used
+- **Docker**: Packages the app to run anywhere
+- **GitHub Actions**: Runs the build tasks automatically
+- **DockerHub**: Stores our containers
+- **GitHub**: Manages code
+
+## CI Process
+
+![CI Process Diagram](link-to-diagram)
+
+## Status
+Everything works as expected. Still testing to make sure Docker images push correctly after updates.
+
+
+
