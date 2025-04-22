@@ -154,7 +154,8 @@ Set up automatic builds for our Angular app Docker container whenever we make co
 
 ## CI Process
 
-![CI Process Diagram](link-to-diagram)
+![CI Process Diagram](https://github.com/WSU-kduncan/ceg3120-cicd-Atexkay23/blob/main/Diagram/Screenshot%202025-04-22%20134719.png)
+
 
 ## Status
 Everything works as expected. Still testing to make sure Docker images push correctly after updates.
