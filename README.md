@@ -98,8 +98,8 @@ DockerHub link: https://hub.docker.com/r/atexkay23/atexkay23-docker
 5. Click **Add secret** to save each one.
 
 ### Describe the Secrets set for this project
-- **DOCKER_USERNAME**: Stores the username for authenticating with DockerHub.
-- **DOCKER_TOKEN**: Stores the DockerHub Personal Access Token (PAT) used for authentication in the GitHub Actions workflow.
+- **DOCKER_USERNAME**: It stores the username for authenticating with DockerHub.
+- **DOCKER_TOKEN**: Stores the DockerHub Personal Access Token which is used for authentication in the GitHub Actions workflow.
 
 ---
 
@@ -159,6 +159,8 @@ Set up automatic builds for our Angular app Docker container whenever we make co
 
 ## Status
 Everything works as expected. Still testing to make sure Docker images push correctly after updates.
+
+## I used ChatGpt and Quillbot to aid me in writing the Markdown Format
 
 
 
