@@ -16,7 +16,8 @@ To create a tag, use this format:
 
 ```bash
 git tag v1.0.0
-```bash
+```
+
 ### How to push a tag in a git repository to GitHub
 After creating a tag locally, push it to GitHub using:
 
@@ -26,6 +27,7 @@ This will trigger workflows if they're configured to run on tag creation.
 
 ---
 
+```
 ### Semantic Versioning Container Images with GitHub Actions
 
 #### Summary of what your workflow does and when it does it
