@@ -149,10 +149,10 @@ docker run -it atexkay23/my-angular-app:latest
 ### Verifying Container is Successfully Serving the Angular Application:
 
 ### Validate from Container Side
-To check if the container is serving the application, run the following command to view the logs of the container:
+To check if the container is serving the application, run this command :
 
 ```bash
-docker logs <container_id>
+docker logs my-angular-app
 ```
 ### Check from the EC2 Instance
 On the EC2 instance, open a web browser and go to the public IP address of the EC2 instance (e.g., `http://<your-ec2-ip>`) to see if the Angular app is working.
@@ -166,8 +166,9 @@ If a new image is available and you want to refresh the container, follow these 
 
 1. **Stop and Remove the Running Container:**
     ```bash
-    docker stop <container_id>
-    docker rm <container_id>
+    docker stop my-angular-app
+    docker rm my-angular-app
+
     ```
 
 2. **Pull the Latest Image:**
@@ -228,6 +229,125 @@ chmod +x refresh-container.sh
 ```
 ### Link to Bash Script in Repository:
 https://github.com/yourusername/yourrepository/tree/main/deployment
+
+# Configuring a Webhook Listener on EC2 Instance
+
+## How to Install Adnanh's Webhook
+
+```bash
+sudo yum update -y
+sudo yum install -y wget
+wget https://github.com/adnanh/webhook/releases/download/v2.8.0/webhook-linux-amd64 -O /usr/local/bin/webhook
+sudo chmod +x /usr/local/bin/webhook
+```
+### How to Verify Successful Installation
+
+To confirm that the `webhook` tool was installed correctly on your EC2 instance, run the following command:
+
+```bash
+webhook -version
+```
+### Summary of the Webhook Definition File
+
+The webhook definition file (usually named `hooks.json`) defines how the webhook service should behave when triggered. Here's an example configuration:
+
+```json
+[
+  {
+    "id": "1",
+    "execute-command": "/home/ec2-user/deployment/script.sh",
+    "command-working-directory": "/home/ec2-user/deployment",
+    "response-message": "Webhook received successfully!",
+    "trigger-rule": {
+      "match": {
+        "type": "payload-hash-sha1",
+        "secret": "your-secret",
+        "parameter": {
+          "source": "header",
+          "name": "X-Hub-Signature"
+        }
+      }
+    }
+  }
+]
+```
+### How to Verify Definition File Was Loaded
+
+```bash
+webhook -hooks /home/ec2-user/deployment/hooks.json -verbose
+
+```
+### How to Verify Webhook Is Receiving Payloads
+
+Run this `curl` command:
+
+```bash
+curl -X POST -H "X-Hub-Signature: sha1=<signature>" -d '{}' http://<your-ec2-ip>:9000/hooks/1
+
+```
+#### How to Monitor Logs from Running Webhook
+
+To monitor real-time logs for the `webhook` service on your EC2 instance, use the following command:
+
+```bash
+sudo journalctl -u webhook.service -f
+
+```
+### What to Look for in Docker Process Views
+
+Use the following commands to view:
+
+```bash
+# View all running containers
+docker ps
+
+# View logs from the container named 'angular-web-app'
+docker logs angular-web-app
+
+```
+### Link to Definition File in Repository
+[Webhook Definition File](https://github.com/Atexkay23/blob/main/deployment/hooks.json)
+
+# Configuring a Payload Sender
+
+## Justification for Selecting GitHub or DockerHub as the Payload Sender
+
+GitHub and DockerHub are commonly used for automating tasks like deployment. They support webhooks, making it easy to send notifications to an EC2 instance when certain events happen.
+
+## How to Enable Your Selection to Send Payloads to the EC2 Webhook Listener
+
+### For GitHub:
+1. Go to **Settings > Webhooks > Add webhook** in your repository.
+2. In the **Payload URL** field, enter `http://<your-ec2-ip>:9000/hooks/1`.
+3. Set **Content type** to `application/json`.
+4. Choose the events you want to trigger the webhook (e.g., **push**).
+5. Click **Add webhook**.
+
+### For DockerHub:
+1. Go to **Settings > Webhooks** in your DockerHub repository.
+2. Add a new webhook with the URL `http://<your-ec2-ip>:9000/hooks/1`.
+3. Select the events you want to trigger the webhook (e.g., **Image Push**).
+4. Save the webhook.
+
+## Explain What Triggers Will Send a Payload to the EC2 Webhook Listener
+
+A payload is sent when specific events occur, like:
+- **GitHub**: On **push**, **pull_request**, etc.
+- **DockerHub**: On **Image Push** or **Image Update**.
+
+## How to Verify a Successful Payload Delivery
+
+1. Check logs on the EC2 instance:
+   ```bash
+   sudo journalctl -u webhook.service -f
+
+
+
+
+
+
+
+
 
 
 
