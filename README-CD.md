@@ -25,7 +25,6 @@ After creating a tag locally, push it to GitHub using:
 git push origin v1.0.0
 This will trigger workflows if they're configured to run on tag creation.
 
----
 
 ```
 ### Semantic Versioning Container Images with GitHub Actions
