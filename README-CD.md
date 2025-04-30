@@ -139,14 +139,14 @@ docker run -d -p 80:80 atexkay23/my-angular-app:latest
 ```
 ### Differences Between Using the `-it` Flag and the `-d` Flag
 
-### `-it` Flag:
+#### `-it` Flag:
 The `-it` flag lets you run the container in interactive mode. This means you can see and use the container's terminal for tasks like debugging or providing input.
 
 Example:
 ```bash
 docker run -it atexkay23/my-angular-app:latest
 ```
-## Verifying Container is Successfully Serving the Angular Application
+### Verifying Container is Successfully Serving the Angular Application
 
 ### Validate from Container Side
 To check if the container is serving the application, run the following command to view the logs of the container:
