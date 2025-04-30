@@ -129,6 +129,42 @@ To pull the latest container image from your DockerHub repository, use the follo
 
 ```bash
 docker pull atexkay23/my-angular-app:latest
+```
+### How to Run Container from Image
+Once the image is pulled, you can run the container using the following command:
+
+```bash
+docker run -d -p 80:80 atexkay23/my-angular-app:latest
+
+```
+# Differences Between Using the `-it` Flag and the `-d` Flag
+
+### `-it` Flag:
+The `-it` flag lets you run the container in interactive mode. This means you can see and use the container's terminal for tasks like debugging or providing input.
+
+Example:
+```bash
+docker run -it atexkay23/my-angular-app:latest
+```
+# Verifying Container is Successfully Serving the Angular Application
+
+### Validate from Container Side
+To check if the container is serving the application, run the following command to view the logs of the container:
+
+```bash
+docker logs <container_id>
+```
+### Check from the EC2 Instance
+On the EC2 instance, open a web browser and go to the public IP address of the EC2 instance (e.g., `http://<your-ec2-ip>`) to see if the Angular app is working.
+
+### Check from Your Local Machine
+From your local computer, open a web browser and type in the public IP of the EC2 instance (e.g., `http://<your-ec2-ip>`) to see if the app can be accessed from outside the EC2 instance.
+
+
+
+
+
+
 
 
 
