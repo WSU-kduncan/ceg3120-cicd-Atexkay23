@@ -230,9 +230,9 @@ chmod +x refresh-container.sh
 ### Link to Bash Script in Repository:
 https://github.com/yourusername/yourrepository/tree/main/deployment
 
-# Configuring a Webhook Listener on EC2 Instance
+## Configuring a Webhook Listener on EC2 Instance
 
-## How to Install Adnanh's Webhook
+### How to Install Adnanh's Webhook
 
 ```bash
 sudo yum update -y
@@ -308,34 +308,34 @@ docker logs angular-web-app
 ### Link to Definition File in Repository
 [Webhook Definition File](https://github.com/Atexkay23/blob/main/deployment/hooks.json)
 
-# Configuring a Payload Sender
+## Configuring a Payload Sender
 
-## Justification for Selecting GitHub or DockerHub as the Payload Sender
+### Justification for Selecting GitHub or DockerHub as the Payload Sender
 
 GitHub and DockerHub are commonly used for automating tasks like deployment. They support webhooks, making it easy to send notifications to an EC2 instance when certain events happen.
 
-## How to Enable Your Selection to Send Payloads to the EC2 Webhook Listener
+### How to Enable Your Selection to Send Payloads to the EC2 Webhook Listener
 
-### For GitHub:
+#### For GitHub:
 1. Go to **Settings > Webhooks > Add webhook** in your repository.
 2. In the **Payload URL** field, enter `http://<your-ec2-ip>:9000/hooks/1`.
 3. Set **Content type** to `application/json`.
 4. Choose the events you want to trigger the webhook (e.g., **push**).
 5. Click **Add webhook**.
 
-### For DockerHub:
+#### For DockerHub:
 1. Go to **Settings > Webhooks** in your DockerHub repository.
 2. Add a new webhook with the URL `http://<your-ec2-ip>:9000/hooks/1`.
 3. Select the events you want to trigger the webhook (e.g., **Image Push**).
 4. Save the webhook.
 
-## Explain What Triggers Will Send a Payload to the EC2 Webhook Listener
+### Explain What Triggers Will Send a Payload to the EC2 Webhook Listener
 
 A payload is sent when specific events occur, like:
 - **GitHub**: On **push**, **pull_request**, etc.
 - **DockerHub**: On **Image Push** or **Image Update**.
 
-## How to Verify a Successful Payload Delivery
+#### How to Verify a Successful Payload Delivery
 
 1. Check logs on the EC2 instance:
    ```bash
