@@ -65,7 +65,7 @@ Compared to Project 4:
 [Click here to view the workflow file](./.github/workflows/semantic-versioning.yml)
 
 
-# Continuous Deployment Documentation
+# Part 2: Continuous Deployment Documentation
 
 ## EC2 Instance Details
 
@@ -121,5 +121,15 @@ To check if Docker is installed correctly:
 ```bash
 docker --version
 docker info
+```
+## Testing on EC2 Instance
+
+### How to Pull Container Image from DockerHub Repository
+To pull the latest container image from your DockerHub repository, use the following command:
+
+```bash
+docker pull atexkay23/my-angular-app:latest
+
+
 
 
