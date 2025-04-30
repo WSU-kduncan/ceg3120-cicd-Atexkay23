@@ -146,7 +146,7 @@ Example:
 ```bash
 docker run -it atexkay23/my-angular-app:latest
 ```
-### Verifying Container is Successfully Serving the Angular Application
+### Verifying Container is Successfully Serving the Angular Application:
 
 ### Validate from Container Side
 To check if the container is serving the application, run the following command to view the logs of the container:
@@ -160,6 +160,61 @@ On the EC2 instance, open a web browser and go to the public IP address of the E
 ### Check from Your Local Machine
 From your local computer, open a web browser and type in the public IP of the EC2 instance (e.g., `http://<your-ec2-ip>`) to see if the app can be accessed from outside the EC2 instance.
 
+### Steps to Manually Refresh the Container Application if a New Image is Available on DockerHub
+
+If a new image is available and you want to refresh the container, follow these steps:
+
+1. **Stop and Remove the Running Container:**
+    ```bash
+    docker stop <container_id>
+    docker rm <container_id>
+    ```
+
+2. **Pull the Latest Image:**
+    ```bash
+    docker pull atexkay23/my-angular-app:latest
+    ```
+
+3. **Run the New Container:**
+    ```bash
+    docker run -d -p 80:80 atexkay23/my-angular-app:latest
+    ```
+## Scripting Container Application Refresh
+
+### Create a Bash Script on Your Instance
+
+Create a bash script named `refresh-container.sh` on your EC2 instance. This script will:
+
+1. **Pull the latest image from your DockerHub repository**.
+2. **Kill and remove the previously running container**.
+3. **Start a new container with the freshly pulled image**.
+
+Here’s an example script:
+
+```bash
+#!/bin/bash
+
+# Define the container name
+CONTAINER_NAME="angular-app-container"
+
+# Stop and remove the currently running container (if exists)
+if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+    echo "Stopping and removing existing container..."
+    docker stop $CONTAINER_NAME
+    docker rm $CONTAINER_NAME
+else
+    echo "No existing container found."
+fi
+
+# Pull the latest image from DockerHub repository
+echo "Pulling the latest Docker image from DockerHub..."
+docker pull atexkay23/my-angular-app:latest
+
+# Run a new container with the freshly pulled image
+echo "Starting a new container..."
+docker run -d --name $CONTAINER_NAME -p 80:80 atexkay23/my-angular-app:latest
+
+echo "Container $CONTAINER_NAME is now running!"
 
 
 
