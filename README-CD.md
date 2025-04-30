@@ -216,6 +216,21 @@ docker run -d --name $CONTAINER_NAME -p 80:80 atexkay23/my-angular-app:latest
 
 echo "Container $CONTAINER_NAME is now running!"
 
+```
+## How to Test the Script
+
+### Make sure the script is executable:
+To make the script executable, run the following command:
+
+```bash
+chmod +x refresh-container.sh
+
+```
+### Link to Bash Script in Repository:
+https://github.com/yourusername/yourrepository/tree/main/deployment
+
+
+
 
 
 
