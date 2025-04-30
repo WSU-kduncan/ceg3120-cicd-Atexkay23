@@ -160,7 +160,7 @@ Set up automatic builds for our Angular app Docker container whenever we make co
 ## Status
 Everything works as expected. Still testing to make sure Docker images push correctly after updates.
 
-## I used ChatGpt and Quillbot to aid me in writing the Markdown Format
+
 
 
 
