@@ -358,10 +358,8 @@ The goal of this project is to automate the deployment of a containerized Angula
 - **GitHub Webhooks / DockerHub Webhooks** – Send payloads to the EC2 webhook listener when events occur.
 
 ## Diagram of Project
+![Continuous Deployment Diagram](./Diagram/p5.png)
 
-## Project Diagram
-
-![Continuous Deployment Diagram](./deployment/diagram.png)
 
 
 
