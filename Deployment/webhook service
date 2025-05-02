@@ -1,0 +1,25 @@
+[Unit]
+Description=Webhook Service for Continuous Deployment
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/deployment
+ExecStart=/usr/local/bin/webhook -hooks /home/ubuntu/deployment/webhooks.json -verbose -port 9000 -hotreload
+Restart=always
+RestartSec=10
+
+# Security settings
+ProtectSystem=full
+PrivateTmp=true
+NoNewPrivileges=true
+
+# Log settings
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
