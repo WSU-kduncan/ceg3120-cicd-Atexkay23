@@ -1,0 +1,52 @@
+#!/bin/bash
+# Container refresh script for continuous deployment
+# Place this file in the deployment folder of your repository
+
+# Configuration - Change these values to match your setup
+IMAGE_NAME="your-dockerhub-username/angular-app"  # Change to your Docker Hub username and repo
+CONTAINER_NAME="angular-app"
+PORT_MAPPING="80:80"  # Map container port 80 to host port 80 (adjust if needed)
+
+# Log start of process with timestamp
+echo "[$(date)] Starting container refresh process"
+
+# Stop and remove existing container if running
+echo "[$(date)] Stopping existing container..."
+if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+    docker stop $CONTAINER_NAME
+    docker rm $CONTAINER_NAME
+    echo "[$(date)] Existing container stopped and removed"
+else
+    echo "[$(date)] No existing container found"
+fi
+
+# Pull latest image from DockerHub
+echo "[$(date)] Pulling latest image from DockerHub..."
+docker pull $IMAGE_NAME:latest
+if [ $? -ne 0 ]; then
+    echo "[$(date)] ERROR: Failed to pull image from DockerHub"
+    exit 1
+fi
+
+# Run new container
+echo "[$(date)] Starting new container..."
+docker run -d --name $CONTAINER_NAME -p $PORT_MAPPING --restart unless-stopped $IMAGE_NAME:latest
+if [ $? -ne 0 ]; then
+    echo "[$(date)] ERROR: Failed to start new container"
+    exit 2
+fi
+
+# Verify container is running
+sleep 5
+if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
+    echo "[$(date)] Container refresh completed successfully! Container is running."
+else
+    echo "[$(date)] ERROR: Container is not running after starting it"
+    exit 3
+fi
+
+# Clean up old/dangling images (optional but recommended)
+echo "[$(date)] Cleaning up dangling images..."
+docker image prune -f
+
+echo "[$(date)] Container refresh process complete"
