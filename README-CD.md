@@ -342,6 +342,26 @@ A payload is sent when specific events occur, like:
    sudo journalctl -u webhook.service -f
 
 
+## Description & Diagram
+
+### What is the goal of this project?
+The goal of this project is to automate the deployment of a containerized Angular application. When code is pushed or a Docker image is updated, a new container is automatically created and run on the EC2 instance.
+
+### What tools are used in this project and what are their roles?
+
+- **GitHub** – Stores and manages source code. Triggers webhooks on push.
+- **DockerHub** – Stores Docker images. Triggers webhook on image push.
+- **Docker** – Runs containers on the EC2 instance.
+- **EC2 (AWS)** – Server where the container is hosted and deployed.
+- **Webhook (adnanh/webhook)** – Listens for payloads and triggers shell scripts.
+- **Shell Script** – Refreshes the Docker container with the new image.
+- **GitHub Webhooks / DockerHub Webhooks** – Send payloads to the EC2 webhook listener when events occur.
+
+## Diagram of Project
+
+## Project Diagram
+
+![Continuous Deployment Diagram](./deployment/diagram.png)
 
 
 
