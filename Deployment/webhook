@@ -1,0 +1,74 @@
+[
+  {
+    "id": "dockerhub-webhook",
+    "execute-command": "/home/ubuntu/deployment/refresh-container.sh",
+    "command-working-directory": "/home/ubuntu/deployment",
+    "response-message": "Docker Hub webhook received, deploying updated container",
+    "pass-arguments-to-command": [],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "value",
+            "value": "push",
+            "parameter": {
+              "source": "payload",
+              "name": "push_data.pusher"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "your-dockerhub-username/angular-app",
+            "parameter": {
+              "source": "payload",
+              "name": "repository.repo_name"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "github-webhook",
+    "execute-command": "/home/ubuntu/deployment/refresh-container.sh",
+    "command-working-directory": "/home/ubuntu/deployment",
+    "response-message": "GitHub workflow webhook received, deploying updated container",
+    "pass-arguments-to-command": [],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hmac-sha256",
+            "secret": "YOUR_GITHUB_SECRET_HERE",
+            "parameter": {
+              "source": "header",
+              "name": "X-Hub-Signature-256"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "completed",
+            "parameter": {
+              "source": "payload",
+              "name": "action"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "success",
+            "parameter": {
+              "source": "payload",
+              "name": "workflow_run.conclusion"
+            }
+          }
+        }
+      ]
+    }
+  }
+]
